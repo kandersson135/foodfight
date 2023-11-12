@@ -1,0 +1,162 @@
+/* IMPORTING WEBFONTS */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+html {
+  background-color: #FAACA8;
+  background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
+
+  background-color: #74EBD5;
+  background-image: linear-gradient(0deg, #74EBD5 0%, #9FACE6 100%);
+
+  height: 100%;
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+}
+
+#game-container {
+	background: url(../img/bg/bg4.png) no-repeat;
+	background-size: cover;
+	/*border: 10px solid rgba(50, 50, 50, 0.1);*/
+	box-shadow:5px 5px rgba(90, 90, 90, 0.1), 10px 10px rgba(70, 70, 70, 0.1), 15px 15px rgba(50, 50, 50, 0.1);
+	height: 400px;
+	margin: 0 auto;
+	margin-top: 50px;
+	position: relative;
+	width: 800px;
+}
+
+#ground {
+	background: url(../img/ground.png) repeat-x;
+	background-size: contain;
+	height: 16px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+#game-title {
+	color: rgba(255, 255, 255, 0.8);
+	font-family: 'Press Start 2P', cursive;
+	text-align: center;
+	text-shadow: 0px 2px rgba(50, 50, 50, 0.1);
+}
+
+.block {
+	position: absolute;
+	bottom: 16px;
+	width: 64px;
+	height: 64px;
+	transform: translateX(-50%);
+}
+
+#block0 {
+	background-image: url(../img/character0Right.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	left: 30px;
+}
+
+#block1 {
+	background-image: url(../img/character1Left.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	right: -35px;
+}
+
+.coin {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+}
+
+.bullet {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: #333333;
+}
+
+#score-player1,
+#score-player2 {
+	position: absolute;
+	top: 10px;
+	font-family: 'Press Start 2P', cursive;
+	color: #fff;
+	text-shadow: 1px 1px 0 #555;
+	font-size: 14px;
+}
+
+#score-player1 {
+	left: 10px;
+}
+
+#score-player2 {
+	right: 10px;
+}
+
+/* Added spin animation for the jumping class */
+/*
+.block.jumping {
+	animation: spin 0.6s ease-in-out;
+}
+
+@keyframes spin {
+	0% {
+		transform: translateX(-50%) rotate(0deg);
+	}
+	100% {
+		transform: translateX(-50%) rotate(var(--spin-direction, 0deg));
+	}
+}
+*/
+
+/* Added spin animation */
+@keyframes spinRight {
+	0% {
+		transform: translateX(-50%) rotate(0deg);
+	}
+
+	100% {
+		transform: translateX(-50%) rotate(360deg);
+	}
+}
+
+@keyframes spinLeft {
+	0% {
+		transform: translateX(-50%) rotate(0deg);
+	}
+
+	100% {
+		transform: translateX(-50%) rotate(-360deg);
+	}
+}
+
+/* Apply spin animation only when jumping */
+.block.jumping.right {
+	animation: spinRight 0.6s infinite linear;
+}
+
+.block.jumping.left {
+	animation: spinLeft 0.6s infinite linear;
+}
+
+/* Added shake animation for the stunned class */
+.block.stunned {
+  animation: shake 0.3s ease-in-out 0s 3;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(-50%);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(-50%) translateX(5px);
+  }
+  30%, 50%, 70%, 90% {
+    transform: translateX(-50%) translateX(-5px);
+  }
+}
