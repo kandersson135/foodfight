@@ -3,12 +3,8 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 
 html {
-  background-color: #FAACA8;
-  background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
-
   background-color: #74EBD5;
   background-image: linear-gradient(0deg, #74EBD5 0%, #9FACE6 100%);
-
   height: 100%;
 }
 
@@ -18,9 +14,7 @@ body {
 }
 
 #game-container {
-	background: url(../img/bg/bg4.png) no-repeat;
 	background-size: cover;
-	/*border: 10px solid rgba(50, 50, 50, 0.1);*/
 	box-shadow:5px 5px rgba(90, 90, 90, 0.1), 10px 10px rgba(70, 70, 70, 0.1), 15px 15px rgba(50, 50, 50, 0.1);
 	height: 400px;
 	margin: 0 auto;
