@@ -6,6 +6,8 @@ $(document).ready(function() {
 	var fallSpeed = 3000; // Initial falling speed in milliseconds
 	var elapsedSeconds = 0;
 	var gameContainer = $('#game-container');
+	var timerInterval;
+  var timeRemaining = 120;
 	var bgAudio = new Audio('audio/bg.wav');
 	var biteAudio = new Audio('audio/bite.wav');
 	var jumpAudio = new Audio('audio/jump.mp3');
@@ -352,8 +354,64 @@ $(document).ready(function() {
 		}
 	});
 
+	// Function to reset the timer
+	function resetTimer() {
+		clearInterval(timerInterval);
+		timeRemaining = 120;
+	 	updateTimerDisplay();
+	 	startTimer();
+	}
+
+	// Function to start the timer
+  function startTimer() {
+    updateTimerDisplay();
+
+    // Start the countdown interval
+    timerInterval = setInterval(function() {
+      timeRemaining--; // Decrease the time remaining
+      updateTimerDisplay(); // Update the timer display
+
+      if (timeRemaining <= 0) {
+        // Time's up, restart the level
+
+				// But first, compare scores
+				if (scores[0] > scores[1]) {
+				  console.log('Player 1 wins!');
+					alert('Player 1 wins!');
+				} else if (scores[1] > scores[0]) {
+				  console.log('Player 2 wins!');
+					alert('Player 2 wins!');
+				} else {
+				  console.log('It\'s a tie!');
+					alert('It\'s a tie!');
+				}
+
+        clearInterval(timerInterval); // Clear the interval
+        location.reload(); // Reload page
+      }
+    }, 1000); // Run the interval every 1 second (1000 milliseconds)
+  }
+
+  // Function to update the timer display
+  function updateTimerDisplay() {
+    //var timerElement = $('#timer span');
+    //timerElement.text(timeRemaining);
+
+		var timerElement = $('#timer span');
+	  var minutes = Math.floor((timeRemaining % 3600) / 60);
+	  var seconds = timeRemaining % 60;
+
+	  // Format the time components to have leading zeros if needed
+	  var formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+	  timerElement.text(formattedTime);
+  }
+
 	// Game loop
 	setInterval(function() {
 		checkCollision();
 	}, 100);
+
+	// Reset timer on page load
+	resetTimer();
 });
