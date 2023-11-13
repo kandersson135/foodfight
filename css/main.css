@@ -98,6 +98,16 @@ body {
 	right: 10px;
 }
 
+#version-info {
+  bottom: 0px;
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  left: 10px;
+  position: absolute;
+  text-shadow: 1px 1px 0 #555;
+}
+
 /* Added spin animation for the jumping class */
 /*
 .block.jumping {
