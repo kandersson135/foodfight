@@ -270,11 +270,12 @@ $(document).ready(function() {
 
 	function shoot(playerIndex) {
     if (isStunned[playerIndex]) return; // Player cannot shoot when stunned
-		if (isJumping[playerIndex]) return; // Player cannot shoot when stunned
+		if (isJumping[playerIndex]) return; // Player cannot shoot when jumping
 
     var block = blocks.eq(playerIndex);
     var bullet = $('<div class="bullet"></div>');
-    bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() : 0) - 2.5 + 'px');
+    //bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() : 0) - 2.5 + 'px');
+		bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() + 20 : 0) - 2.5 + 'px');
     bullet.css('bottom', '50px'); // Adjust the starting position of the bullet
     $('#game-container').append(bullet);
 
