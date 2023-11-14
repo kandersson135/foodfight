@@ -4,6 +4,7 @@ $(document).ready(function() {
 	var isJumping = [false, false]; // Assuming two players
 	var isStunned = [false, false]; // Stunned state for players
 	var fallSpeed = 3000; // Initial falling speed in milliseconds
+	var coinInterval;
 	var elapsedSeconds = 0;
 	var gameContainer = $('#game-container');
 	var timerInterval;
@@ -16,7 +17,7 @@ $(document).ready(function() {
 	bgAudio.volume = 0.1;
 	bgAudio.loop = true;
 	biteAudio.volume = 0.3;
-	jumpAudio.volume = 0.3;
+	jumpAudio.volume = 0.5;
 	spitAudio.volume = 0.3;
 	hurtAudio.volume = 0.3;
 	bgAudio.play();
@@ -40,6 +41,16 @@ $(document).ready(function() {
 
   // Set the random background image to the #game-container
   $('#game-container').css('background', backgrounds[randomIndex]);
+
+	// Function to move the background sideways
+  function moveBackground() {
+    $('#game-container').animate({
+      'background-position-x': '+=2px' // Adjust the speed by changing the value
+    }, 100, 'linear', moveBackground);
+  }
+
+	// Call the function to start the animation
+  moveBackground();
 
 	function jump(playerIndex) {
 		if (isStunned[playerIndex]) return; // Player cannot jump when stunned
@@ -261,7 +272,7 @@ $(document).ready(function() {
 	//blocks.eq(0).css('left', '35px'); // Bottom-left corner
 	//blocks.eq(1).css('left', 'calc(100% - 85px)'); // Bottom-right corner
 
-	setInterval(function() {
+	coinInterval = setInterval(function() {
 		createCoin();
 		elapsedSeconds += 3;
 		if (elapsedSeconds >= 30) {
@@ -271,24 +282,32 @@ $(document).ready(function() {
 
 
 	function shoot(playerIndex) {
-    if (isStunned[playerIndex]) return; // Player cannot shoot when stunned
-		if (isJumping[playerIndex]) return; // Player cannot shoot when jumping
+	  if (isStunned[playerIndex] || isJumping[playerIndex]) return; // Player cannot shoot when stunned or jumping
 
-    var block = blocks.eq(playerIndex);
-    var bullet = $('<div class="bullet"></div>');
-    //bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() : 0) - 2.5 + 'px');
-		bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() + 20 : 0) - 2.5 + 'px');
-    bullet.css('bottom', '50px'); // Adjust the starting position of the bullet
-    $('#game-container').append(bullet);
+	  var block = blocks.eq(playerIndex);
 
-		// Play spit sound
-		spitAudio.play();
+	  // Check if the player has enough points to shoot
+	  if (scores[playerIndex] >= 5) {
+	    var bullet = $('<div class="bullet"></div>');
+	    //bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() + 20 : 0) - 2.5 + 'px');
+			bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() + 20 : playerIndex === 1 ? block.width() + -90 : 0) - 2.5 + 'px');
+	    bullet.css('bottom', '50px'); // Adjust the starting position of the bullet
+	    $('#game-container').append(bullet);
 
-    // Move the bullet horizontally
-    bullet.animate({ left: (playerIndex === 0 ? '100%' : '0%') }, 1000, 'linear', function() {
-      $(this).remove();
-    });
-  }
+	    // Play spit sound
+	    spitAudio.play();
+
+	    // Player lose points when shooting
+	    scores[playerIndex] -= 5;
+	    updateScores();
+
+	    // Move the bullet horizontally
+	    bullet.animate({ left: (playerIndex === 0 ? '100%' : '0%') }, 1000, 'linear', function() {
+	      $(this).remove();
+	    });
+	  }
+	}
+
 
 	// Gamepad API
 	function handleGamepadInput() {
@@ -376,18 +395,23 @@ $(document).ready(function() {
 
 				// But first, compare scores
 				if (scores[0] > scores[1]) {
-				  console.log('Player 1 wins!');
-					alert('Player 1 wins!');
+					swal("Time's up!", "Player 1 wins!").then((value) => {
+					  location.reload(); // Reload page
+					});
 				} else if (scores[1] > scores[0]) {
-				  console.log('Player 2 wins!');
-					alert('Player 2 wins!');
+					swal("Time's up!", "Player 2 wins!").then((value) => {
+					  location.reload(); // Reload page
+					});
 				} else {
-				  console.log('It\'s a tie!');
-					alert('It\'s a tie!');
+					swal("Time's up!", "It's a tie!").then((value) => {
+					  location.reload(); // Reload page
+					});
 				}
 
-        clearInterval(timerInterval); // Clear the interval
-        location.reload(); // Reload page
+        clearInterval(timerInterval); // Clear timer interval
+				clearInterval(coinInterval); // Clear coin interval
+				bgAudio.pause();
+				$('#game-container').stop();
       }
     }, 1000); // Run the interval every 1 second (1000 milliseconds)
   }
