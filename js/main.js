@@ -14,12 +14,14 @@ $(document).ready(function() {
 	var jumpAudio = new Audio('audio/jump.mp3');
 	var spitAudio = new Audio('audio/spit.mp3');
 	var hurtAudio = new Audio('audio/hurt.mp3');
+	var timesupAudio = new Audio('audio/timesup.wav');
 	bgAudio.volume = 0.1;
 	bgAudio.loop = true;
 	biteAudio.volume = 0.3;
 	jumpAudio.volume = 0.5;
 	spitAudio.volume = 0.3;
 	hurtAudio.volume = 0.3;
+	timesupAudio.volume = 0.3;
 	bgAudio.play();
 
 	function updateScores() {
@@ -275,7 +277,7 @@ $(document).ready(function() {
 	coinInterval = setInterval(function() {
 		createCoin();
 		elapsedSeconds += 3;
-		if (elapsedSeconds >= 30) {
+		if (elapsedSeconds >= 60) {
 			fallSpeed = 1500;
 		}
 	}, 3000);
@@ -410,8 +412,9 @@ $(document).ready(function() {
 
         clearInterval(timerInterval); // Clear timer interval
 				clearInterval(coinInterval); // Clear coin interval
-				bgAudio.pause();
-				$('#game-container').stop();
+				bgAudio.pause(); // Pause background music
+				$('#game-container').stop(); // Stop background animation
+				timesupAudio.play(); // Play times up sound
       }
     }, 1000); // Run the interval every 1 second (1000 milliseconds)
   }
