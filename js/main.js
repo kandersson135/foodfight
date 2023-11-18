@@ -224,7 +224,7 @@ $(document).ready(function() {
 		        setTimeout(function() {
 		          block.removeClass('stunned');
 		          isStunned[index] = false;
-		        }, 1500); // Stun duration (3 seconds)
+		        }, 1500); // Stun duration (1.5 seconds)
 
 		        // Remove the bullet after hitting a player
 		        bullet.remove();
