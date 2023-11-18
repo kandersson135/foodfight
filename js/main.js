@@ -283,17 +283,14 @@ $(document).ready(function() {
     }
 	}
 
-	// Initial positions for Player 1 and Player 2
-	//blocks.eq(0).css('left', '35px'); // Bottom-left corner
-	//blocks.eq(1).css('left', 'calc(100% - 85px)'); // Bottom-right corner
-
+	// var randomInterval = Math.floor(Math.random() * 3) + 1;
 	coinInterval = setInterval(function() {
 		createCoin();
 		elapsedSeconds += 3;
-		if (elapsedSeconds >= 60) {
+		if (elapsedSeconds >= 90) {
 			fallSpeed = 1500;
 		}
-	}, 3000);
+	}, 3000); //}, randomInterval * 1000);
 
 	function shoot(playerIndex) {
 	  if (isStunned[playerIndex] || isJumping[playerIndex]) return; // Player cannot shoot when stunned or jumping
