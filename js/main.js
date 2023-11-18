@@ -305,6 +305,13 @@ $(document).ready(function() {
 	    bullet.css('bottom', '50px'); // Adjust the starting position of the bullet
 	    $('#game-container').append(bullet);
 
+			// Turn to the right side when shooting
+			if (playerIndex === 0) {
+				setBlockDirection(block, 'right');
+			} else if (playerIndex === 1) {
+				setBlockDirection(block, 'left');
+			}
+
 	    // Play spit sound
 	    spitAudio.play();
 
