@@ -15,6 +15,7 @@ $(document).ready(function() {
 	var spitAudio = new Audio('audio/spit.mp3');
 	var hurtAudio = new Audio('audio/hurt.mp3');
 	var timesupAudio = new Audio('audio/timesup.wav');
+	var countdownAudio = new Audio('audio/countdown.mp3');
 	bgAudio.volume = 0.1;
 	bgAudio.loop = true;
 	biteAudio.volume = 0.3;
@@ -22,6 +23,7 @@ $(document).ready(function() {
 	spitAudio.volume = 0.3;
 	hurtAudio.volume = 0.3;
 	timesupAudio.volume = 0.3;
+	countdownAudio.volume = 0.3;
 	bgAudio.play();
 
 	function updateScores() {
@@ -316,7 +318,6 @@ $(document).ready(function() {
 	  }
 	}
 
-
 	// Gamepad API
 	function handleGamepadInput() {
 		var gamepads = navigator.getGamepads();
@@ -384,7 +385,7 @@ $(document).ready(function() {
 	// Function to reset the timer
 	function resetTimer() {
 		clearInterval(timerInterval);
-		timeRemaining = 120;
+		timeRemaining = 150;
 	 	updateTimerDisplay();
 	 	startTimer();
 	}
@@ -397,6 +398,10 @@ $(document).ready(function() {
     timerInterval = setInterval(function() {
       timeRemaining--; // Decrease the time remaining
       updateTimerDisplay(); // Update the timer display
+
+			if (timeRemaining === 4) {
+          countdownAudio.play();
+      }
 
       if (timeRemaining <= 0) {
         // Time's up, restart the level
