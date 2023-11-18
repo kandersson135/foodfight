@@ -234,7 +234,7 @@ $(document).ready(function() {
     });
   }
 
-	function createCoin() {
+	function createCoin(numberOfCoins) {
 		var coinImages = [
 			'img/food3/01.png',
 			'img/food3/02.png',
@@ -263,19 +263,24 @@ $(document).ready(function() {
 			'img/food3/25.png',
 		];
 
-		var coin = $('<div class="coin coin-image"></div>');
-		var coinLeft = Math.random() * (gameContainer.width() - 20);
-		coin.css({
-			left: coinLeft,
-			top: 0,
-			background: 'url(' + coinImages[Math.floor(Math.random() * coinImages.length)] + ')',
-			backgroundSize: 'cover',
-		});
-		gameContainer.append(coin);
+		var numberOfCoins = Math.floor(Math.random() * 5) + 1; // Generates a random number between 1 and 5
+    var delay = 0; // Initial delay
+    for (var i = 0; i < numberOfCoins; i++) {
+        var coin = $('<div class="coin coin-image"></div>');
+        var coinLeft = Math.random() * (gameContainer.width() - 20);
+        coin.css({
+            left: coinLeft,
+            top: 0,
+            background: 'url(' + coinImages[Math.floor(Math.random() * coinImages.length)] + ')',
+            backgroundSize: 'cover',
+        });
+        gameContainer.append(coin);
 
-		coin.animate({ top: '100%' }, fallSpeed, 'linear', function() {
-			$(this).remove();
-		});
+        coin.delay(delay).animate({ top: '100%' }, fallSpeed, 'linear', function() {
+            $(this).remove();
+        });
+        delay += 100; // Adjust this value to change the delay between coin drops
+    }
 	}
 
 	// Initial positions for Player 1 and Player 2
@@ -289,7 +294,6 @@ $(document).ready(function() {
 			fallSpeed = 1500;
 		}
 	}, 3000);
-
 
 	function shoot(playerIndex) {
 	  if (isStunned[playerIndex] || isJumping[playerIndex]) return; // Player cannot shoot when stunned or jumping
