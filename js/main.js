@@ -25,8 +25,14 @@ $(document).ready(function() {
 	bgAudio.play();
 
 	function updateScores() {
-		$('#score-player1').text('Player 1: ' + scores[0]);
-		$('#score-player2').text('Player 2: ' + scores[1]);
+		//$('#score-player1').text('Player 1: ' + scores[0]);
+		//$('#score-player2').text('Player 2: ' + scores[1]);
+
+		//var scoreStr = money.toString().padStart(6, '0');
+  	//moneyDisplay.textContent = scoreStr;
+
+		$('#score-player1').text('Player 1: ' + scores[0].toString().padStart(6, '0'));
+		$('#score-player2').text('Player 2: ' + scores[1].toString().padStart(6, '0'));
 	}
 
 	// Array of background images
@@ -178,7 +184,7 @@ $(document).ready(function() {
           blockLeft <= coinLeft + coinWidth
         ) {
           if (blockTop + blockHeight - 10 >= coinTop) {
-            scores[index] += 10;
+            scores[index] += 100;
             updateScores();
             coin.remove();
 
