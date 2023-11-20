@@ -24,7 +24,6 @@ $(document).ready(function() {
 	hurtAudio.volume = 0.3;
 	timesupAudio.volume = 0.3;
 	countdownAudio.volume = 0.3;
-	bgAudio.play();
 
 	function updateScores() {
 		//$('#score-player1').text('Player 1: ' + scores[0]);
@@ -58,9 +57,6 @@ $(document).ready(function() {
       'background-position-x': '+=2px' // Adjust the speed by changing the value
     }, 100, 'linear', moveBackground);
   }
-
-	// Call the function to start the animation
-  moveBackground();
 
 	function jump(playerIndex) {
 		if (isStunned[playerIndex]) return; // Player cannot jump when stunned
@@ -283,6 +279,7 @@ $(document).ready(function() {
     }
 	}
 
+	/*
 	// var randomInterval = Math.floor(Math.random() * 3) + 1;
 	coinInterval = setInterval(function() {
 		createCoin();
@@ -291,6 +288,7 @@ $(document).ready(function() {
 			fallSpeed = 1500;
 		}
 	}, 3000); //}, randomInterval * 1000);
+	*/
 
 	function shoot(playerIndex) {
 	  if (isStunned[playerIndex] || isJumping[playerIndex]) return; // Player cannot shoot when stunned or jumping
@@ -458,6 +456,27 @@ $(document).ready(function() {
 		checkCollision();
 	}, 100);
 
-	// Reset timer on page load
-	resetTimer();
+	$('#start-btn').click(function() {
+		// Play bg audio
+		bgAudio.play();
+
+		// Call the function to start the animation
+	  moveBackground();
+
+		// Start food drop
+		coinInterval = setInterval(function() {
+			createCoin();
+			elapsedSeconds += 3;
+			if (elapsedSeconds >= 90) {
+				fallSpeed = 1500;
+			}
+		}, 3000);
+
+		// Reset timer on page load
+		resetTimer();
+
+		$('.full-screen-overlay').hide();
+  });
+
+
 });
