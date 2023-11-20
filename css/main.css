@@ -219,4 +219,8 @@ body {
     #game-title {
       display: none;
     }
+
+    .swal-modal {
+      margin-top: 0px;
+    }
 }
