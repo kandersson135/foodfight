@@ -475,8 +475,6 @@ $(document).ready(function() {
 		// Reset timer on page load
 		resetTimer();
 
-		$('.full-screen-overlay').hide();
+		$('.full-screen-overlay').fadeOut(1500);
   });
-
-
 });
