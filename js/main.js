@@ -8,7 +8,7 @@ $(document).ready(function() {
 	var elapsedSeconds = 0;
 	var gameContainer = $('#game-container');
 	var timerInterval;
-  var timeRemaining = 120;
+  var timeRemaining = 150;
 	var bgAudio = new Audio('audio/bg.wav');
 	var biteAudio = new Audio('audio/bite.wav');
 	var jumpAudio = new Audio('audio/jump.mp3');
@@ -79,7 +79,7 @@ $(document).ready(function() {
 				bottom: '200px'
 			}, 300, function() {
 				block.animate({
-					bottom: '16px'
+					bottom: '64px'
 				}, 300, function() {
 					isJumping[playerIndex] = false;
 					// Remove the "jumping" class to stop the spin animation
@@ -300,7 +300,8 @@ $(document).ready(function() {
 	    var bullet = $('<div class="bullet"></div>');
 	    //bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() + 20 : 0) - 2.5 + 'px');
 			bullet.css('left', block.position().left + (playerIndex === 0 ? block.width() + 20 : playerIndex === 1 ? block.width() + -90 : 0) - 2.5 + 'px');
-	    bullet.css('bottom', '50px'); // Adjust the starting position of the bullet
+	    //bullet.css('bottom', '50px'); // Adjust the starting position of the bullet
+	    bullet.css('bottom', '98px'); // Adjust the starting position of the bullet
 	    $('#game-container').append(bullet);
 
 			// Turn to the right side when shooting
@@ -412,6 +413,8 @@ $(document).ready(function() {
       if (timeRemaining <= 0) {
         // Time's up, restart the level
 
+				exitFullscreen();
+
 				// But first, compare scores
 				if (scores[0] > scores[1]) {
 					swal("Time's up!", "Player 1 wins!").then((value) => {
@@ -475,6 +478,34 @@ $(document).ready(function() {
 		// Reset timer on page load
 		resetTimer();
 
-		$('.full-screen-overlay').fadeOut(1500);
+		$('.full-screen-overlay').fadeOut(800);
+		$('#game-container').css('cursor', 'none');
+  });
+
+	function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { /* Firefox */
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE/Edge */
+        document.msExitFullscreen();
+    }
+	}
+
+	$('#fullscreen-button').on('click', function() {
+	  const gameContainer = $('#game-container')[0]; // Get the DOM element
+		$(gameContainer).css('background-size', 'cover');
+
+	  if (gameContainer.requestFullscreen) {
+	      gameContainer.requestFullscreen();
+	  } else if (gameContainer.mozRequestFullScreen) { /* Firefox */
+	      gameContainer.mozRequestFullScreen();
+	  } else if (gameContainer.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+	      gameContainer.webkitRequestFullscreen();
+	  } else if (gameContainer.msRequestFullscreen) { /* IE/Edge */
+	      gameContainer.msRequestFullscreen();
+	  }
   });
 });
