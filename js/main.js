@@ -459,6 +459,7 @@ $(document).ready(function() {
 		checkCollision();
 	}, 100);
 
+	/*
 	$('#start-btn').click(function() {
 		// Play bg audio
 		bgAudio.play();
@@ -481,6 +482,37 @@ $(document).ready(function() {
 		$('.full-screen-overlay').fadeOut(800);
 		$('#game-container').css('cursor', 'none');
   });
+	*/
+
+	// Set focus to start-btn
+	$('#start-btn').focus();
+
+	// Check for click or keypress
+	$('#start-btn').on('click keypress', function(event) {
+    // Check if the event type is either click or keypress
+    if (event.type === 'click' || event.which === 13 || event.keyCode === 13) {
+			// Play bg audio
+			bgAudio.play();
+
+			// Call the function to start the animation
+		  moveBackground();
+
+			// Start food drop
+			coinInterval = setInterval(function() {
+				createCoin();
+				elapsedSeconds += 3;
+				if (elapsedSeconds >= 90) {
+					fallSpeed = 1500;
+				}
+			}, 3000);
+
+			// Reset timer on page load
+			resetTimer();
+
+			$('.full-screen-overlay').fadeOut(800);
+			$('#game-container').css('cursor', 'none');
+    }
+	}).attr('tabindex', '0');
 
 	function exitFullscreen() {
     if (document.exitFullscreen) {

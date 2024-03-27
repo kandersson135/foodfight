@@ -147,6 +147,7 @@ body {
   font-family: 'Press Start 2P', cursive;
   padding: 12px;
   text-align: center;
+  text-decoration: none;
   text-shadow: 1px 1px 0 #555;
   user-select: none;
 }
@@ -156,6 +157,10 @@ body {
   left: 3px;
   position: relative;
   top: 3px;
+}
+
+#start-btn:focus {
+  outline: none;
 }
 
 @keyframes blink {
