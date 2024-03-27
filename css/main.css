@@ -6,9 +6,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Stick&display=swap');
 
 html {
+  animation: 90s linear 0s normal none infinite animate;
   background-color: #74EBD5;
-  background-image: linear-gradient(0deg, #74EBD5 0%, #9FACE6 100%);
+  background-image: url("../img/bg.png"), linear-gradient(0deg, #74EBD5 0%, #9FACE6 100%); /* background pattern: https://patternico.com/ */
   height: 100%;
+}
+
+/* ANIMATE BACKGROUND */
+@keyframes animate {
+	from {background-position: bottom left;}
+	to {background-position: top right;}
 }
 
 body {
