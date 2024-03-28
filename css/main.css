@@ -8,18 +8,14 @@
 html {
   animation: 90s linear 0s normal none infinite animate;
   background-color: #74EBD5;
-  /*background-image: url("../img/bg.png"), linear-gradient(0deg, #74EBD5 0%, #9FACE6 100%);  background pattern: https://patternico.com/ */
-  background-image: url("../img/bg3.png"), linear-gradient(0deg, #74EBD5 0%, #9FACE6 100%); /* background pattern: https://patternico.com/ */
-  background-size: 64px;
-  background-position: bottom left;
-  background-repeat: repeat-x;
+  background-image: url("../img/bg.png"), linear-gradient(0deg, #74EBD5 0%, #9FACE6 100%); /* background pattern: https://patternico.com/ */
   height: 100%;
 }
 
 /* ANIMATE BACKGROUND */
 @keyframes animate {
 	from {background-position: bottom left;}
-	to {background-position: bottom right;}
+	to {background-position: top right;}
 }
 
 body {
