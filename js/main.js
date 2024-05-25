@@ -360,6 +360,7 @@ $(document).ready(function() {
 	setInterval(handleGamepadInput, 50);
 
 	// Keyboard input
+	/*
 	$(document).keydown(function(e) {
 		switch (e.which) {
 			case 87: // W key for jump
@@ -388,6 +389,51 @@ $(document).ready(function() {
 				break;
 		}
 	});
+	*/
+
+	// Object to keep track of currently pressed keys
+	var keysPressed = {};
+
+	// Keyboard input
+	$(document).keydown(function(e) {
+	    keysPressed[e.which] = true;
+	    handleKeys();
+	});
+
+	$(document).keyup(function(e) {
+	    keysPressed[e.which] = false;
+	});
+
+	function handleKeys() {
+	    // Check the state of each key and perform the appropriate action
+	    if (keysPressed[87]) { // W key for jump
+	        jump(0);
+	    }
+	    if (keysPressed[65]) { // A key for move left
+	        moveLeft(0);
+	    }
+	    if (keysPressed[68]) { // D key for move right
+	        moveRight(0);
+	    }
+	    if (keysPressed[32]) { // Space bar key for shooting
+	        shoot(0);
+	    }
+	    if (keysPressed[38]) { // Up arrow key for jump
+	        jump(1);
+	    }
+	    if (keysPressed[37]) { // Left arrow key for move left
+	        moveLeft(1);
+	    }
+	    if (keysPressed[39]) { // Right arrow key for move right
+	        moveRight(1);
+	    }
+	    if (keysPressed[16]) { // Right shift key for shooting
+	        shoot(1);
+	    }
+	}
+
+	// Call handleKeys periodically to process input continuously
+	setInterval(handleKeys, 30);
 
 	// Function to reset the timer
 	function resetTimer() {
